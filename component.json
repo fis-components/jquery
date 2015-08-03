@@ -1,5 +1,5 @@
 {
-    "version": "1.11.3",
+    "version": "1.11.2",
     "repos": "https://github.com/jquery/jquery.git",
     "name": "jquery",
     "main": "jquery.js"

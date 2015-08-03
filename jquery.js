@@ -1,5 +1,5 @@
 /*!
- * jQuery JavaScript Library v1.11.3
+ * jQuery JavaScript Library v1.11.2
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -9,7 +9,7 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2015-08-03T16:18Z
+ * Date: 2015-08-03T16:19Z
  */
 
 (function (global, factory) {
@@ -45,7 +45,7 @@
     var toString = class2type.toString;
     var hasOwn = class2type.hasOwnProperty;
     var support = {};
-    var version = '1.11.3',
+    var version = '1.11.2',
         // Define a local copy of jQuery
         jQuery = function (selector, context) {
             // The jQuery object is actually just the init constructor 'enhanced'
@@ -421,11 +421,7 @@
         class2type['[object ' + name + ']'] = name.toLowerCase();
     });
     function isArraylike(obj) {
-        // Support: iOS 8.2 (not reproducible in simulator)
-        // `in` check used to prevent JIT error (gh-2145)
-        // hasOwn isn't used here due to false negatives
-        // regarding Nodelist length in IE
-        var length = 'length' in obj && obj.length, type = jQuery.type(obj);
+        var length = obj.length, type = jQuery.type(obj);
         if (type === 'function' || jQuery.isWindow(obj)) {
             return false;
         }
