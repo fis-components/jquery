@@ -1,0 +1,13 @@
+{
+    "name": "jquery",
+    "description": "JavaScript library for DOM operations",
+    "repos": "https://github.com/jquery/jquery",
+    "main": "jquery.js",
+    "tag": "",
+    "reposType": "npm",
+    "dependencies": {},
+    "version": "2.1.1",
+    "paths": {
+        "dist": "."
+    }
+}
