@@ -1,4 +1,4 @@
-[jQuery](http://jquery.com/) - New Wave JavaScript
+[jQuery](http://jquery.com/) — New Wave JavaScript
 ==================================================
 
 Contribution Guides
@@ -14,19 +14,18 @@ In the spirit of open source software development, jQuery always encourages comm
 Environments in which to use jQuery
 --------------------------------------
 
-- [Browser support](http://jquery.com/browser-support/) differs between the master (2.x) branch and the 1.x-master branch. Specifically, 2.x does not support legacy browsers such as IE6-8. The jQuery team continues to provide support for legacy browsers on the 1.x-master branch. Use the latest 1.x release if support for those browsers is required. See [browser support](http://jquery.com/browser-support/) for more info.
-- To use jQuery in Node, browser extensions, and other non-browser environments, use only **2.x** releases. 1.x does not support these environments.
+- [Browser support](http://jquery.com/browser-support/) differs between the master branch and the 1.x branch. Specifically, the master branch does not support legacy browsers such as IE6-8. The jQuery team continues to provide support for legacy browsers on the 1.x branch. Use the latest 1.x release if support for those browsers is required. See [browser support](http://jquery.com/browser-support/) for more info.
+- To use jQuery in Node, browser extensions, and other non-browser environments, use only master branch releases (2.x). The 1.x branch does not support these environments.
 
 
 What you need to build your own jQuery
 --------------------------------------
 
-In order to build jQuery, you need to have Node.js/npm latest and git 1.7 or later.
-(Earlier versions might work OK, but are not tested.)
+In order to build jQuery, you need to have the latest Node.js/npm and git 1.7 or later. Earlier versions might work, but are not supported.
 
-For Windows you have to download and install [git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
+For Windows, you have to download and install [git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
 
-Mac OS users should install [Homebrew](http://mxcl.github.com/homebrew/). Once Homebrew is installed, run `brew install git` to install git,
+OS X users should install [Homebrew](http://brew.sh/). Once Homebrew is installed, run `brew install git` to install git,
 and `brew install node` to install Node.js.
 
 Linux/BSD users should use their appropriate package managers to install git and Node.js, or build from source
@@ -48,17 +47,17 @@ cd jquery && npm run build
 ```
 The built version of jQuery will be put in the `dist/` subdirectory, along with the minified copy and associated map file.
 
-If you want create custom build or help with jQuery development, it would be better to install [grunt command line interface](https://github.com/gruntjs/grunt-cli) as a global package:
+If you want to create custom build or help with jQuery development, it would be better to install [grunt command line interface](https://github.com/gruntjs/grunt-cli) as a global package:
 
 ```
 npm install -g grunt-cli
 ```
 Make sure you have `grunt` installed by testing:
 ```
-grunt -v
+grunt -V
 ```
 
-Now by running `grunt` command, in the jquery directory, you could build full version of jQuery, just like with `npm run build` command:
+Now by running the `grunt` command, in the jquery directory, you can build a full version of jQuery, just like with an `npm run build` command:
 ```
 grunt
 ```
@@ -83,7 +82,7 @@ Some example modules that can be excluded are:
 - **ajax/script**: The `<script>` AJAX transport only; used to retrieve scripts.
 - **ajax/jsonp**: The JSONP AJAX transport only; depends on the ajax/script transport.
 - **css**: The `.css()` method plus non-animated `.show()`, `.hide()` and `.toggle()`. Also removes **all** modules depending on css (including **effects**, **dimensions**, and **offset**).
-- **deprecated**: Methods documented as deprecated but not yet removed; currently only `.andSelf()`.
+- **deprecated**: Methods documented as deprecated but not yet removed.
 - **dimensions**: The `.width()` and `.height()` methods, including `inner-` and `outer-` variations.
 - **effects**: The `.animate()` method and its shorthands such as `.slideUp()` or `.hide("slow")`.
 - **event**: The `.on()` and `.off()` methods and all event functionality. Also removes `event/alias`.
@@ -95,11 +94,7 @@ Some example modules that can be excluded are:
 - **exports/global**: Exclude the attachment of global jQuery variables ($ and jQuery) to the window.
 - **exports/amd**: Exclude the AMD definition.
 
-As a special case, you may also replace Sizzle by using a special flag `grunt custom:-sizzle`.
-
-- **sizzle**: The Sizzle selector engine. When this module is excluded, it is replaced by a rudimentary selector engine based on the browser's `querySelectorAll` method that does not support jQuery selector extensions or enhanced semantics. See the selector-native.js file for details.
-
-*Note*: Excluding Sizzle will also exclude all jQuery selector extensions (such as `effects/animatedSelector` and `css/hiddenVisibleSelectors`).
+Removing Sizzle is not supported on the `1.x` branch.
 
 The build process shows a message for each dependent module it excludes or includes.
 
@@ -119,13 +114,13 @@ grunt custom --amd=""
 
 #### Custom Build Examples
 
-To create a custom build of the latest stable version, first check out the version:
+To create a custom build, first check out the version:
 
 ```bash
-git pull; git checkout $(git describe --abbrev=0 --tags)
+git pull; git checkout VERSION
 ```
 
-Then, make sure all Node dependencies are installed:
+where VERSION is the version you want to customize. Then, make sure all Node dependencies are installed:
 
 ```bash
 npm install
@@ -151,7 +146,7 @@ Exclude a bunch of modules:
 grunt custom:-ajax,-css,-deprecated,-dimensions,-effects,-event/alias,-offset,-wrap
 ```
 
-For questions or requests regarding custom builds, please start a thread on the [Developing jQuery Core](https://forum.jquery.com/developing-jquery-core) section of the forum. Due to the combinatorics and custom nature of these builds, they are not regularly tested in jQuery's unit test process. The non-Sizzle selector engine currently does not pass unit tests because it is missing too much essential functionality.
+For questions or requests regarding custom builds, please start a thread on the [Developing jQuery Core](https://forum.jquery.com/developing-jquery-core) section of the forum. Due to the combinatorics and custom nature of these builds, they are not regularly tested in jQuery's unit test process.
 
 Running the Unit Tests
 --------------------------------------
@@ -165,7 +160,7 @@ npm install
 Start `grunt watch` or `npm start` to auto-build jQuery as you work:
 
 ```bash
-cd jquery && grunt watch
+grunt watch
 ```
 
 
@@ -214,7 +209,7 @@ As the source code is handled by the Git version control system, it's useful to 
 
 ### Cleaning ###
 
-If you want to purge your working directory back to the status of upstream, following commands can be used (remember everything you've worked on is gone after these):
+If you want to purge your working directory back to the status of upstream, the following commands can be used (remember everything you've worked on is gone after these):
 
 ```bash
 git reset --hard upstream/master
@@ -223,7 +218,7 @@ git clean -fdx
 
 ### Rebasing ###
 
-For feature/topic branches, you should always use the `--rebase` flag to `git pull`, or if you are usually handling many temporary "to be in a github pull request" branches, run following to automate this:
+For feature/topic branches, you should always use the `--rebase` flag to `git pull`, or if you are usually handling many temporary "to be in a github pull request" branches, run the following to automate this:
 
 ```bash
 git config branch.autosetuprebase local
@@ -235,7 +230,7 @@ git config branch.autosetuprebase local
 If you're getting merge conflicts when merging, instead of editing the conflicted files manually, you can use the feature
 `git mergetool`. Even though the default tool `xxdiff` looks awful/old, it's rather useful.
 
-Following are some commands that can be used there:
+The following are some commands that can be used there:
 
 * `Ctrl + Alt + M` - automerge as much as possible
 * `b` - jump to next merge conflict
@@ -301,7 +296,7 @@ t( testName, selector, [ "array", "of", "ids" ] );
 Example:
 
 ```js
-t("Check for something", "//[a]", ["foo", "baar"]);
+t("Check for something", "//[a]", ["foo", "bar"]);
 ```
 
 
@@ -359,7 +354,7 @@ callback( jQueryFromIFrame, iFrameWindow, iFrameDocument );
 Loads a given page constructing a url with fileName: `"./data/" + fileName + ".html"`
 The given callback is fired when window.iframeCallback is called by the page.
 The arguments passed to the callback are the same as the
-arguments passed to window.iframeCallback, whatever that may be
+arguments passed to window.iframeCallback, whatever that may be.
 
 ```js
 testIframeWithCallback( testName, fileName, callback );
