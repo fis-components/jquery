@@ -14,8 +14,8 @@ In the spirit of open source software development, jQuery always encourages comm
 Environments in which to use jQuery
 --------------------------------------
 
-- [Browser support](http://jquery.com/browser-support/) differs between the master branch and the 1.x branch. Specifically, the master branch does not support legacy browsers such as IE6-8. The jQuery team continues to provide support for legacy browsers on the 1.x branch. Use the latest 1.x release if support for those browsers is required. See [browser support](http://jquery.com/browser-support/) for more info.
-- To use jQuery in Node, browser extensions, and other non-browser environments, use only master branch releases (2.x). The 1.x branch does not support these environments.
+- [Browser support](http://jquery.com/browser-support/) differs between the master branch and the compat branch. Specifically, the master branch does not support legacy browsers such as IE8. The jQuery team continues to provide support for legacy browsers on the compat branch. Use the latest compat release if support for those browsers is required. See [browser support](http://jquery.com/browser-support/) for more info.
+- To use jQuery in Node, browser extensions, and other non-browser environments, use only master branch releases given the name "jquery" rather than "jquery-compat". The compat branch does not support these environments.
 
 
 What you need to build your own jQuery
@@ -87,6 +87,8 @@ Some example modules that can be excluded are:
 - **effects**: The `.animate()` method and its shorthands such as `.slideUp()` or `.hide("slow")`.
 - **event**: The `.on()` and `.off()` methods and all event functionality. Also removes `event/alias`.
 - **event/alias**: All event attaching/triggering shorthands like `.click()` or `.mouseover()`.
+- **event/focusin**: Cross-browser support for the focusin and focusout events.
+- **event/trigger**: The `.trigger()` and `.triggerHandler()` methods. Used by **alias** and **focusin** modules.
 - **offset**: The `.offset()`, `.position()`, `.offsetParent()`, `.scrollLeft()`, and `.scrollTop()` methods.
 - **wrap**: The `.wrap()`, `.wrapAll()`, `.wrapInner()`, and `.unwrap()` methods.
 - **core/ready**: Exclude the ready module if you place your scripts at the end of the body. Any ready callbacks bound with `jQuery()` will simply be called immediately. However, `jQuery(document).ready()` will not be a function and `.on("ready", ...)` or similar will not be triggered.
@@ -94,7 +96,13 @@ Some example modules that can be excluded are:
 - **exports/global**: Exclude the attachment of global jQuery variables ($ and jQuery) to the window.
 - **exports/amd**: Exclude the AMD definition.
 
-Removing Sizzle is not supported on the `1.x` branch.
+As a special case, you may also replace Sizzle by using a special flag `grunt custom:-sizzle`.
+
+- **sizzle**: The Sizzle selector engine. When this module is excluded, it is replaced by a rudimentary selector engine based on the browser's `querySelectorAll` method that does not support jQuery selector extensions or enhanced semantics. See the [selector-native.js](https://github.com/jquery/jquery/blob/master/src/selector-native.js) file for details.
+
+*Note*: Excluding Sizzle will also exclude all jQuery selector extensions (such as `effects/animatedSelector` and `css/hiddenVisibleSelectors`).
+
+*Note*: Removing Sizzle is not supported on the `compat` branch.
 
 The build process shows a message for each dependent module it excludes or includes.
 
@@ -120,7 +128,7 @@ To create a custom build, first check out the version:
 git pull; git checkout VERSION
 ```
 
-where VERSION is the version you want to customize. Then, make sure all Node dependencies are installed:
+Where VERSION is the version you want to customize. Then, make sure all Node dependencies are installed:
 
 ```bash
 npm install
@@ -146,7 +154,7 @@ Exclude a bunch of modules:
 grunt custom:-ajax,-css,-deprecated,-dimensions,-effects,-event/alias,-offset,-wrap
 ```
 
-For questions or requests regarding custom builds, please start a thread on the [Developing jQuery Core](https://forum.jquery.com/developing-jquery-core) section of the forum. Due to the combinatorics and custom nature of these builds, they are not regularly tested in jQuery's unit test process.
+For questions or requests regarding custom builds, please start a thread on the [Developing jQuery Core](https://forum.jquery.com/developing-jquery-core) section of the forum. Due to the combinatorics and custom nature of these builds, they are not regularly tested in jQuery's unit test process. The non-Sizzle selector engine currently does not pass unit tests because it is missing too much essential functionality.
 
 Running the Unit Tests
 --------------------------------------
@@ -253,7 +261,7 @@ start();
 ```
 
 
-Note: QUnit's eventual addition of an argument to stop/start is ignored in this test suite so that start and stop can be passed as callbacks without worrying about their parameters
+*Note*: QUnit's eventual addition of an argument to stop/start is ignored in this test suite so that start and stop can be passed as callbacks without worrying about their parameters.
 
 ### Test assertions ###
 
